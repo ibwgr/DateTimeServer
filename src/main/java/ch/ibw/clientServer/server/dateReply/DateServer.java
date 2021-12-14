@@ -3,7 +3,7 @@ package ch.ibw.clientServer.server.dateReply;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,13 +26,16 @@ public class DateServer {
         try (ServerSocket listener = new ServerSocket(6060)) {
             System.out.println("DateServer läuft");
 
+            boolean serverAN = true;
+
 
             try (Socket socket = listener.accept()) {   // Warte auf Clientverbindung
                 System.out.println("[Server] verbunden.");
+                while (serverAN)  {
 
-            while (true){
                     PrintWriter zumClient = new PrintWriter(socket.getOutputStream(), true);
-                    zumClient.println("Fuer Zeit = TIME / Fuer Datum = DATE");
+                    zumClient.println("Fuer Zeit = TIME / Fuer Datum = DATE  / oder zum beenden =  QUIT");
+
                     System.out.println("[Server] Nachricht gesendet.");
 
                     BufferedReader vomClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -46,16 +49,18 @@ public class DateServer {
 
                     } else if (clientWunsch.equalsIgnoreCase("DATE")) {
                         objectZumClient.writeObject(date.format(jetzt));
-                    } else {
+                    } else if (clientWunsch.equalsIgnoreCase("QUIT")){
+                        zumClient.println("Serveranfrage wird beendet");
+                        serverAN = false;
+
+                    }else {
+
                         zumClient.println(clientWunsch + " ist unzulaessig");
-                        // zumClient.println(clientWunsch);
-                    }
-                    // objectZumClient.flush();
 
 
-                    //out.println(new Date().toString());     // Sende Antwort an Client
 
                 }
+            }
 
             }
         }
