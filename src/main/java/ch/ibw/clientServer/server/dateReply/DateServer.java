@@ -20,7 +20,7 @@ public class DateServer {
             System.out.println("DateServer läuft");
             try (Socket socket = listener.accept()) {   // Warte auf Clientverbindung
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                out.println(new Date().toString());     // Sende Antwort an Client
+                out.println(new Date()); // Sende Antwort an Client
             }
         }
     }

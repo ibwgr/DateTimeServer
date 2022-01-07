@@ -1,0 +1,32 @@
+@startuml
+
+participant Client1 order 1
+participant Server order 2
+
+activate Server
+Server -> Server: bind :6060
+note right of Server: Server wartet auf eingehende Verbindungsanfrage
+Client1 -> Server: connect Server:6060
+note right of Client1: Client1 baut eine Verbindung zu Server auf
+activate Client1
+activate Server
+
+Server -> Client1: "Was willst du?"
+note right of Client1
+Client1 muss die Frage beantworten
+entweder mit DATE oder TIME
+end note
+
+Client1 -> Server: "DATE"
+Server -> Client1: "23.04.2023"
+deactivate Server
+destroy Server
+
+Client1 -> Client1: Antwort anzeigen
+destroy Client1
+
+note right of Server
+    Das Server Programm ist nun beendet, die Verbindung damit auch.
+    Das Client Programm ist ebenfalls fertig.
+end note
+@enduml
