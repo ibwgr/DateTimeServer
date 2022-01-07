@@ -25,16 +25,20 @@ class DateServerTest {
 
   @Test
   void singleRequest_respondsWithDate(){
-    String response = client.sendMessage("");
-    Assertions.assertTrue(response.contains("CET 2019"));
+    client.readFromServer();
+    String response = client.sendMessage("date");
+    Assertions.assertTrue(response.contains("CET 2022"));
   }
 
   @Test
-  void twoRequestsInSequence_respondWithDate(){
-    String response1 = client.sendMessage("");
-    Assertions.assertTrue(response1.contains("CET 2019"));
+  void twoRequestsInSequence_respondWithDate() {
+    client.readFromServer();
+    String response1 = client.sendMessage("date");
+    Assertions.assertTrue(response1.contains("CET 2022"));
 
-    String response2 = client.sendMessage("");
-    Assertions.assertTrue(response2.contains("CET 2019"));
+    // geht nicht, server beendet diese verbindung nach der ersten antwort.
+    client.readFromServer();
+    String response2 = client.sendMessage("date");
+    Assertions.assertTrue(response2.contains("CET 2022"));
   }
 }
