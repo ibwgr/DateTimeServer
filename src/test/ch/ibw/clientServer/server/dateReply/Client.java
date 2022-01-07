@@ -24,6 +24,15 @@ public class Client {
         }
     }
 
+    public String readFromServer() {
+        try {
+            return in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public String sendMessage(String msg) {
         out.println(msg);
         try {
