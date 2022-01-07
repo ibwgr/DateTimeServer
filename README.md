@@ -18,9 +18,20 @@ Abgesehen von DateServer auf dem master Branch implementieren alle Server-Varian
 1. Client schickt Antwort auf die Frage (Date oder Time)
 1. Server schickt die gewünschte Auskunft (Date oder Time)
 
-Als Sequenzdiagramm (DateServer auf Branch date-time-protocol):
+Als Sequenzdiagramm:
 
 ![datetime-protocol.png](datetime-protocol.png)
+
+Im obigen Diagramm beendet der Server sofort, nachdem das Protokoll der ersten Verbindung abgearbeitet ist. Das heisst,
+es ist nicht mehr möglich, erneut eine Verbindung aufzubauen. Es ist auch nicht möglich eine zweite Verbindung
+aufzubauen, während dem der Server auf eine Antwort vom Client wartet.
+
+Im folgenden Diagramm sieht man eine andere Implementierung, welche der Implementierung der Klasse DateServer auf Branch
+date-time-protocol entspricht. In diesem Fall kann der Server endlos viele Verbindungen nacheinander abarbeiten. Es ist
+damit auch möglich, dass Client2 eine zusätzliche Verbindung aufbaut, während dem der Server auf eine Antwort von
+Client1 wartet. Die Verbindung zu Client2 steht allerdings erst, sobald die erste Verbindung beendet ist.
+
+![datetime-protocol-serial.png](datetime-protocol-serial.png)
 
 ## Docker
 

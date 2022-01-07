@@ -1,0 +1,33 @@
+@startuml
+
+participant Client1 order 1
+participant Server order 2
+participant Client2 order 3
+
+activate Server
+Client1 -> Server: connect
+activate Client1
+activate Server
+
+Server -> Client1: "Was willst du?"
+
+Client2 -> Server: connect
+activate Client2
+
+Client1 -> Server: "DATE"
+Server -> Client1: "23.04.2023"
+deactivate Server
+
+Server -> Client2: "Was willst du?"
+activate Server
+Client2 -> Server: "TIME"
+Server -> Client2: "15:03"
+deactivate Server
+
+Client2 -> Client2: Antwort anzeigen
+destroy Client2
+
+Client1 -> Client1: Antwort anzeigen
+destroy Client1
+
+@enduml
